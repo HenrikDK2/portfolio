@@ -1,0 +1,22 @@
+[build]
+publish = "build"
+functions = "lambda"
+command = "npm run prod"
+[dev]
+publish = "build"
+functions = "lambda"
+[[redirects]]
+  from = "/robots.txt"
+  to = "/static/robots.txt"
+  status = 200
+  force = true
+[[redirects]]
+  from = "/*"
+  to = "/"
+  status = 404
+  force = true
+ [[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 200
+  force = true

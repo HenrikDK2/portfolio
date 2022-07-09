@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="da">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+      }
+
+      #preloader {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 0.5s ease;
+        opacity: 1;
+        position: fixed;
+        user-select: none;
+        background-color: #110a0a;
+        z-index: 100000000000;
+      }
+    </style>
+    <link rel="icon" href="%PUBLIC_URL%/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="canonical" href="https://henrikmundtmilo.dk" />
+    <meta
+      name="description"
+      content="Front-end Webudvikler Portfolio. Jeg udvikler i React med fokus på semantisk og responsive hjemmesider. Webudvikler kompetencer er React, Html, Css, JS m.m."
+    />
+    <meta
+      name="keywords"
+      content="Portfolio, Danmark, Valby, København, Frontend, Responsive, Semantisk, Semantisk Html, Responsive Hjemmeside, Front-end, Dansk Webuvikler, Webudvikler, Udvikler, React framework, Dansk front end webudvikler, Henrik Mundt Milo's Front-end Webudvikler Portfolio, Hjemmeside, Henrik, Henrik Mundt Milo, Webuvikler Portfolio, Henrik Mundt Milo Portfolio, Front-end Webuvikler, Front-end Webuvikler Portfolio, HTML, CSS, JavaScript, React, Firebase, Gimp, Git, Graphql, gulp, Mysql, Nodejs, Photoshop, Rollup, Sass, Webpack, Typescript, Gatsby, MongoDB, Apollo Graphql Server, Fullstack Webudvikler, Fullstack"
+    />
+    <meta name="author" content="Henrik Mundt Milo" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/favicon.svg" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@400&family=Roboto:wght@400;500;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <title>Henrik Mundt Milo - Front-end Webudvikler Portfolio</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="preloader">
+      <img
+        src="./loader.svg"
+        alt=""
+        rel="preload"
+        style="display: block; width: 30vw; height: 30vh"
+      />
+    </div>
+    <div id="root"></div>
+    <script>
+      document
+        .getElementById("preloader")
+        .addEventListener("dragstart", (e) => e.preventDefault());
+    </script>
+  </body>
+</html>

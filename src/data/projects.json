@@ -1,0 +1,69 @@
+[
+  {
+    "title": "React CMS",
+    "paragraphs": [
+      "Et kort eksempel på et CMS system. Jeg arbejde med Drag and Drop API, og redigerende indhold i form af et CMS system.",
+      "Projektet er bygget i React, men kompilere til Preact. Jeg fik arbejde med Tailwind, Redux, Typescript og React i dette projekt."
+    ],
+    "alt": "Billed af mit CMS systemet, klik her for flere oplysninger",
+    "src": "./react-cms.jpg",
+    "tags": ["Responsive"],
+    "href": "https://react-cms-project.netlify.app/"
+  },
+  {
+    "title": "IP Tracker",
+    "paragraphs": [
+      "Et kort lille projekt der handlede om at du skulle kunne indtaste en IP addresse og få nogle informationer om dens lokation, isp, osv.",
+      "Hjemmesiden er responsiv, og er bundle med Parcel. Jeg fik arbejde med HTML, SCSS, Typescript og Serverless Netlify Functions i dette projekt."
+    ],
+    "alt": "Billed af mit IP Tracking projekt forside, klik her for flere oplysninger",
+    "src": "./ipTracker.jpg",
+    "tags": ["Responsive", "NodeJS"],
+    "href": "https://singular-gumption-092236.netlify.app/"
+  },
+  {
+    "title": "Compress Images",
+    "paragraphs": [
+      "Dette var et kort projekt omkring komprimering af billeder. Du kan sende flere billeder afsted til mit API endpoint som så sender alle billederne tilbage til dig komprimeret i en ZIP fil.",
+      "Som udgangspunkt er siden responsiv, men selve funktionaliteten virker ikke på mobil. Jeg fik arbejde med HTML, CSS, Typescript og NodeJS, og de nødvendige pakker for udvikling af dette projekt."
+    ],
+    "alt": "Billed af mit Node.js/Typescript Project, klik her for flere oplysninger",
+    "src": "./compress.jpg",
+    "tags": ["Responsive", "NodeJS"],
+    "href": "https://compress-images.netlify.app/"
+  },
+  {
+    "title": "UI Komponenter",
+    "paragraphs": [
+      "I dette projekt har jeg arbejde med React og Contentful. Målet med opgaven var at lave genbrugelige React komponenter som kan gengives flere steder på siden. Jeg har hente alle billeder fra Contentful og jeg har brugt useContext for at sende data ned til mine komponenter.",
+      "Jeg bruger React framework i opgaven fordi det er et Javascript Framework som er opbygget af komponenter, så det gav god mening i dette koncept. "
+    ],
+    "alt": "Billed af mit React Project, klik her for flere oplysninger",
+    "src": "./uiComponents.jpg",
+    "tags": [],
+    "href": "https://ui-components-site.netlify.app/"
+  },
+  {
+    "title": "iPlayMusic",
+    "paragraphs": [
+      "Formålet med opgaven var at lave en web application som kunne hente data fra spotify API. Jeg har brugt Sass, Gulp og Ejs som værktøjer i dette projekt.",
+      "Jeg har brugt Gulp som taskrunnner for at minificere filer, og automatisere nogle arbejdsprocesser. Sass har jeg brugt for at simplificer koden i CSS, og gøre den mere læslig. Jeg har brugt Ejs for at gøre min kode mere modulær."
+    ],
+    "alt": "Billed af mit Spotify Webudvikling projekt, klik her for flere oplysninger",
+    "src": "./iPlayMusic.jpg",
+    "tags": ["Responsive"],
+    "href": "https://hopeful-easley-c50d1a.netlify.app/"
+  },
+  {
+    "title": "DiscordBot",
+    "paragraphs": [
+      "I dette projekt har jeg udnyttet Discord API med discord.js, node-fetch og Puppeteer for at crawl reddit for opslag.",
+      "Der er nogle funktioner som giver dig mulighed til at ændre prefix, og finde et tilfældig spil på Steam, og hente opslag fra Reddit."
+    ],
+    "alt": "Billed af mit Discord NodeJS projekt, klik her for flere oplysninger",
+    "src": "./discord.jpg",
+    "tags": ["NodeJS"],
+    "button": "Tjek Github Repo",
+    "href": "https://github.com/HenrikDK2/DiscordBot"
+  }
+]

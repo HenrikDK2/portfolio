@@ -1,0 +1,98 @@
+:root{
+   --primary:#ce1717;
+}
+
+body {
+  -ms-overflow-style: none;  
+  scrollbar-width: none; 
+  overflow-x: hidden;
+  margin:0;
+  padding:0;
+  font-family: "Roboto", sans-serif;
+} 
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes slideOut {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+@keyframes slideDownFade {
+  0% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes middleLineOut {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 50%;
+  }
+}
+
+@keyframes fadeTextOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes animateH5 {
+  0% {
+    color: rgba(255, 215, 0, 1);
+  }
+  50% {
+    color: rgba(255, 215, 0, 0.5);
+  }
+  100% {
+    color: rgba(255, 215, 0, 1);
+  }
+}
+
