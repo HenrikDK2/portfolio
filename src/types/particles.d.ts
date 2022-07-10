@@ -1,5 +1,3 @@
-import { RefObject } from "react";
-
 export type Position = [number, number];
 export type Range = [number, number];
 export type Preset = "Circle" | "Triangle";
@@ -8,20 +6,20 @@ export type Transitions = {
   opacity: { name: "show" | "hide"; range: Range };
   sway: { name: "left" | "right" };
 };
-export interface IParticleInit {
-  canvas: HTMLCanvasElement;
-  fps: number;
-  direction: Direction;
-  objects: RefObject<ICanvasObject[]>;
-  preset: Preset;
-  amount: number;
-  size: number;
-  minSize: number;
-}
 
-export type CreateObject = IParticleGenerator & {
+export type CreateObject = IParticlesProps & {
   canvas: HTMLCanvasElement;
 };
+
+export interface IParticlesProps {
+  fps: number;
+  amount: number;
+  minSize: number;
+  size: number;
+  direction: Direction;
+  preset: Preset;
+  amountBreakpoints?: { [key in number]: number };
+}
 
 export interface ICanvasObject {
   initPos: Position;

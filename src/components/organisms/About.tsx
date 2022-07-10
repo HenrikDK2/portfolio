@@ -36,12 +36,13 @@ export const About: FC = memo(() => (
     <AboutMe />
     {window.innerWidth > 550 && (
       <Particles
-        amount={70}
+        amount={30}
         direction="Up"
         fps={24}
         minSize={10}
         preset="Circle"
         size={35}
+        amountBreakpoints={{ 500: 50, 1200: 70, 1920: 90 }}
       />
     )}
     <Skills />

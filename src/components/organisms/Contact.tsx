@@ -42,6 +42,7 @@ export const Contact: FC = memo(() => (
         minSize={20}
         preset="Triangle"
         size={50}
+        amountBreakpoints={{ 500: 50, 1200: 70 }}
       />
     )}
     <Divider top={true} />

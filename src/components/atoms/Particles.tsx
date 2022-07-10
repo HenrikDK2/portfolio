@@ -3,10 +3,9 @@ import { FC, memo, useEffect, useRef, useState } from "react";
 import { css } from "goober";
 import {
   CreateObject,
-  Preset,
   ICanvasObject,
-  Direction,
   MoveAnimate,
+  IParticlesProps,
   IDraw,
 } from "../../types/particles";
 
@@ -78,12 +77,12 @@ const createCanvasObject = ({
   let object: ICanvasObject = {
     initPos: [x, y],
     pos: [x, y],
-    rgba: [145, 145, 143, 0],
+    rgba: [145, 145, 145, 0],
     direction,
     transitions: {
       opacity: {
         name: Math.random() < 0.5 ? "show" : "hide",
-        range: [0.05, 0.2],
+        range: [0.05, 0.25],
       },
       sway: { name: Math.random() < 0.5 ? "left" : "right" },
     },
@@ -94,6 +93,22 @@ const createCanvasObject = ({
   if (object.size < minSize) object.size = minSize;
 
   return object;
+};
+
+const getAmounts = (props: IParticlesProps): IParticlesProps["amount"] => {
+  if (props.amountBreakpoints) {
+    const entries = Object.entries(props.amountBreakpoints).sort(
+      (a, b) => parseInt(b[0]) - parseInt(a[0])
+    );
+
+    for (let entry of entries) {
+      if (window.matchMedia(`(min-width: ${entry[0]}px)`).matches) {
+        return entry[1];
+      }
+    }
+  }
+
+  return props.amount;
 };
 
 const draw = ({ ctx, fps, preset, direction, objects }: IDraw) => {
@@ -127,15 +142,6 @@ const draw = ({ ctx, fps, preset, direction, objects }: IDraw) => {
   }
 };
 
-interface IParticlesProps {
-  fps: number;
-  amount: number;
-  minSize: number;
-  size: number;
-  direction: Direction;
-  preset: Preset;
-}
-
 export const Particles: FC<IParticlesProps> = memo((props) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [init, setInit] = useState<boolean>(false);
@@ -164,7 +170,7 @@ export const Particles: FC<IParticlesProps> = memo((props) => {
       canvas.height = canvas.clientHeight;
 
       let newObjects: ICanvasObject[] = [];
-      for (let i = 0; i < props.amount; i++) {
+      for (let i = 0; i < getAmounts(props); i++) {
         newObjects.push(
           createCanvasObject({
             canvas,
