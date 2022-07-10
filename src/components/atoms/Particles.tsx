@@ -35,12 +35,12 @@ const opacityAnimate = (object: ICanvasObject, fps: number) => {
 
 const swayAnimate = (object: ICanvasObject, fps: number) => {
   if (object.transitions.sway.name === "left") {
-    object.pos[0] -= 4 / fps;
+    object.pos[0] -= object.moveSpeed[0] / fps;
     if (object.pos[0] < object.initPos[0] - object.size) {
       object.transitions.sway.name = "right";
     }
   } else {
-    object.pos[0] += 4 / fps;
+    object.pos[0] += object.moveSpeed[0] / fps;
     if (object.pos[0] > object.initPos[0] + object.size) {
       object.transitions.sway.name = "left";
     }
@@ -49,14 +49,14 @@ const swayAnimate = (object: ICanvasObject, fps: number) => {
 
 const moveAnimate = ({ direction, object, canvas, fps }: MoveAnimate) => {
   if (direction === "Up") {
-    object.pos[1] -= 8 / fps;
+    object.pos[1] -= object.moveSpeed[1] / fps;
 
     if (object.pos[1] < -object.size) {
       object.pos[1] = canvas.height + object.size;
       object.pos[0] = Math.random() * canvas.width;
     }
   } else if (direction === "Down") {
-    object.pos[1] += 8 / fps;
+    object.pos[1] += object.moveSpeed[1] / fps;
 
     if (object.pos[1] > canvas.height + object.size) {
       object.pos[1] = object.size;
@@ -79,6 +79,10 @@ const createCanvasObject = ({
     pos: [x, y],
     rgba: [145, 145, 145, 0],
     direction,
+    moveSpeed: [
+      Math.round(Math.random() * 4 + 1),
+      Math.round(Math.random() * 8 + 2),
+    ],
     transitions: {
       opacity: {
         name: Math.random() < 0.5 ? "show" : "hide",

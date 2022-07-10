@@ -25,6 +25,7 @@ export interface ICanvasObject {
   initPos: Position;
   pos: Position;
   size: number;
+  moveSpeed: [number, number];
   direction: Direction;
   rgba: [number, number, number, number];
   transitions: Transitions;
