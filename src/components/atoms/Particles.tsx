@@ -188,7 +188,11 @@ export const Particles: FC<IParticlesProps> = memo((props) => {
   // Resize canvas
   const resizeCanvas = () => {
     clearTimeout(canvasResizeTimeout.current);
-    canvasResizeTimeout.current = setTimeout(() => setInit(false), 250);
+    canvasResizeTimeout.current = setTimeout(() => {
+      if (canvasRef.current?.width !== canvasRef.current?.clientWidth) {
+        setInit(false);
+      }
+    }, 250);
   };
 
   useEffect(() => {
