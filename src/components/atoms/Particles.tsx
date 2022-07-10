@@ -1,15 +1,16 @@
-import { FC, memo } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { FC, memo, useEffect, useRef, useState } from "react";
 import { css } from "goober";
-import { loadBaseMover } from "tsparticles-move-base";
-import { loadCircleShape } from "tsparticles-shape-circle";
-import { loadColorUpdater } from "tsparticles-updater-color";
-import { loadOpacityUpdater } from "tsparticles-updater-opacity";
-import { loadTriangleShape } from "tsparticles-shape-polygon";
-import { Engine } from "tsparticles-engine";
-import Particles, { IParticlesParams } from "preact-particles";
-import { loadOutModesUpdater } from "tsparticles-updater-out-modes";
+import {
+  CreateObject,
+  Preset,
+  ICanvasObject,
+  Direction,
+  MoveAnimate,
+  IDraw,
+} from "../../types/particles";
 
-const particleBg = css`
+const canvasStyle = css`
   height: 100%;
   position: absolute;
   transform: translateX(-50%);
@@ -19,136 +20,185 @@ const particleBg = css`
   width: 100vw;
 `;
 
-const particlesInit = async (engine: Engine) => {
-  await loadOutModesUpdater(engine);
-  await loadCircleShape(engine);
-  await loadBaseMover(engine);
-  await loadColorUpdater(engine);
-  await loadOpacityUpdater(engine);
-  await loadTriangleShape(engine);
+const opacityAnimate = (object: ICanvasObject, fps: number) => {
+  if (object.transitions.opacity.name === "show") {
+    object.rgba[3] += 0.05 / fps;
+    if (object.rgba[3] > object.transitions.opacity.range[1]) {
+      object.transitions.opacity.name = "hide";
+    }
+  } else {
+    object.rgba[3] -= 0.05 / fps;
+    if (object.rgba[3] < object.transitions.opacity.range[0]) {
+      object.transitions.opacity.name = "show";
+    }
+  }
 };
 
-const circleParams: IParticlesParams["params"] = {
-  fpsLimit: 30,
-  particles: {
-    number: {
-      value: 20,
-      density: {
-        enable: true,
-        value_area: 800,
-      },
-    },
-    size: {
-      value: 27.620603391810075,
-      random: true,
-      anim: {
-        enable: false,
-        speed: 20,
-        size_min: 0.1,
-        sync: false,
-      },
-    },
-    line_linked: {
-      enable: false,
-    },
-    color: {
-      value: "#919191",
-    },
-    shape: {
-      type: "circle",
-    },
-    opacity: {
-      random: true,
-      value: 0.2,
-      anim: {
-        enable: true,
-        speed: 0.2,
-      },
-    },
-    move: {
-      enable: true,
-      speed: 0.3,
-      direction: "top",
-      random: false,
-      straight: false,
-      out_mode: "out",
-      bounce: false,
-      attract: {
-        enable: false,
-        rotateX: 600,
-        rotateY: 1200,
-      },
-    },
-  },
+const swayAnimate = (object: ICanvasObject, fps: number) => {
+  if (object.transitions.sway.name === "left") {
+    object.pos[0] -= 4 / fps;
+    if (object.pos[0] < object.pos[0] - object.size) {
+      object.transitions.sway.name = "right";
+    }
+  } else {
+    object.pos[0] += 4 / fps;
+    if (object.pos[0] > object.pos[0] + object.size) {
+      object.transitions.sway.name = "left";
+    }
+  }
 };
 
-const triangleParams: IParticlesParams["params"] = {
-  fpsLimit: 30,
-  particles: {
-    number: {
-      value: 20,
-      density: {
-        enable: true,
-        value_area: 800,
-      },
-    },
-    size: {
-      value: 27.620603391810075,
-      random: true,
-      anim: {
-        enable: false,
-        speed: 20,
-        size_min: 0.1,
-        sync: false,
-      },
-    },
-    line_linked: {
-      enable: false,
-    },
-    color: {
-      value: "#919191",
-    },
-    shape: {
-      type: "triangle",
-    },
-    opacity: {
-      random: true,
-      value: 0.2,
-      anim: {
-        enable: true,
-        speed: 0.2,
-      },
-    },
-    move: {
-      enable: true,
-      speed: 0.3,
-      direction: "bottom",
-      random: false,
-      straight: false,
-      out_mode: "out",
-      bounce: false,
-      attract: {
-        enable: false,
-        rotateX: 600,
-        rotateY: 1200,
-      },
-    },
-  },
+const moveAnimate = ({ direction, object, canvas, fps }: MoveAnimate) => {
+  if (direction === "Up") {
+    object.pos[1] -= 8 / fps;
+
+    if (object.pos[1] < -object.size) {
+      object.pos[1] = canvas.height + object.size;
+      object.pos[0] = Math.random() * canvas.width;
+    }
+  } else if (direction === "Down") {
+    object.pos[1] += 8 / fps;
+
+    if (object.pos[1] > canvas.height + object.size) {
+      object.pos[1] = object.size;
+      object.pos[0] = Math.random() * canvas.width;
+    }
+  }
 };
 
-interface IProps {
-  id: string;
-  preset: "Triangle" | "Circle";
+const createCanvasObject = ({
+  canvas,
+  size,
+  direction,
+  minSize,
+}: CreateObject): ICanvasObject => {
+  const x = Math.random() * canvas.width;
+  const y = Math.random() * canvas.height;
+
+  let object: ICanvasObject = {
+    initPos: [x, y],
+    pos: [x, y],
+    rgba: [145, 145, 143, 0],
+    direction,
+    transitions: {
+      opacity: {
+        name: Math.random() < 0.5 ? "show" : "hide",
+        range: [0.05, 0.2],
+      },
+      sway: { name: Math.random() < 0.5 ? "left" : "right" },
+    },
+    size: Math.random() * size,
+  };
+
+  object.rgba[3] = Math.random() * object.transitions.opacity.range[1];
+  if (object.size < minSize) object.size = minSize;
+
+  return object;
+};
+
+const draw = ({ ctx, fps, preset, direction, objects }: IDraw) => {
+  const canvas = ctx.canvas;
+
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+  for (let i = 0; i < objects.length; i++) {
+    const [x, y] = objects[i].pos;
+    let [r, g, b, a] = objects[i].rgba;
+    let object = objects[i];
+
+    ctx.fillStyle = "rgba(" + r + "," + g + "," + b + "," + a + ")";
+    opacityAnimate(object, fps);
+    swayAnimate(object, fps);
+    moveAnimate({ direction, object, canvas, fps });
+    ctx.beginPath();
+
+    if (preset === "Triangle") {
+      ctx.moveTo(x, y);
+      ctx.lineTo(x - 0.6 * object.size, y + object.size);
+      ctx.lineTo(x + 0.6 * object.size, y + object.size);
+    }
+
+    if (preset === "Circle") {
+      ctx.beginPath();
+      ctx.arc(x, y, object.size, 0, 2 * Math.PI);
+    }
+
+    ctx.fill();
+  }
+};
+
+interface IParticlesProps {
+  fps: number;
+  amount: number;
+  minSize: number;
+  size: number;
+  direction: Direction;
+  preset: Preset;
 }
 
-export const TSParticles: FC<IProps> = memo(({ id, preset }) => (
-  <Particles
-    key={id}
-    id={id}
-    className={particleBg}
-    options={preset === "Triangle" ? triangleParams : circleParams}
-    init={particlesInit}
-  />
-));
+export const Particles: FC<IParticlesProps> = memo((props) => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [init, setInit] = useState<boolean>(false);
+  const canvasResizeTimeout = useRef<any>(null);
+  let objects = useRef<ICanvasObject[] | null>(null);
 
-export default TSParticles;
+  // Update draw loop
+  useEffect(() => {
+    if (canvasRef.current && init && objects.current) {
+      const ctx = canvasRef.current.getContext("2d")!;
+      const update = setInterval(
+        () => draw({ ctx, objects: objects.current!, ...props }),
+        1000 / props.fps
+      );
+
+      return () => clearInterval(update);
+    }
+    return;
+  }, [objects, canvasRef, init]);
+
+  // Initialize
+  useEffect(() => {
+    if (canvasRef.current && !init) {
+      const canvas = canvasRef.current;
+      canvas.width = canvas.clientWidth;
+      canvas.height = canvas.clientHeight;
+
+      let newObjects: ICanvasObject[] = [];
+      for (let i = 0; i < props.amount; i++) {
+        newObjects.push(
+          createCanvasObject({
+            canvas,
+            ...props,
+          })
+        );
+      }
+
+      objects.current = newObjects;
+      setInit(true);
+    }
+  }, [canvasRef, init]);
+
+  // Resize canvas
+  const resizeCanvas = () => {
+    clearTimeout(canvasResizeTimeout.current);
+    canvasResizeTimeout.current = setTimeout(() => setInit(false), 250);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", resizeCanvas, {
+      passive: true,
+    });
+
+    return () => {
+      window.removeEventListener("resize", () => resizeCanvas);
+    };
+  }, []);
+
+  return (
+    <canvas
+      aria-label="Particle Background"
+      ref={canvasRef}
+      className={canvasStyle}
+    />
+  );
+});

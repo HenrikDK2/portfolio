@@ -1,10 +1,9 @@
 import { styled } from "goober";
-import { FC, lazy, memo, Suspense } from "react";
+import { FC, memo } from "react";
 import { AboutMe } from "../molecules/AboutMe";
 import { Skills } from "../molecules/Skills";
 import { Divider } from "../atoms/Divider";
-
-const ParticlesComponent = lazy(() => import("../atoms/Particles"));
+import { Particles } from "../atoms/Particles";
 
 const Section = styled("section")`
   display: flex;
@@ -36,9 +35,14 @@ export const About: FC = memo(() => (
   <Section>
     <AboutMe />
     {window.innerWidth > 550 && (
-      <Suspense>
-        <ParticlesComponent preset="Circle" id="circle-tsparticles" />
-      </Suspense>
+      <Particles
+        amount={70}
+        direction="Up"
+        fps={24}
+        minSize={10}
+        preset="Circle"
+        size={35}
+      />
     )}
     <Skills />
     <Divider />

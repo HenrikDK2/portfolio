@@ -1,10 +1,9 @@
-import { FC, memo, lazy, Suspense } from "react";
+import { FC, memo } from "react";
 import { styled } from "goober";
 import { Divider } from "../atoms/Divider";
 import { ContactNotice } from "../molecules/ContactNotice";
 import { Form } from "../molecules/Form";
-
-const ParticlesComponent = lazy(() => import("../atoms/Particles"));
+import { Particles } from "../atoms/Particles";
 
 const Section = styled("section")`
   position: relative;
@@ -36,9 +35,14 @@ const ContentSection = styled("section")`
 export const Contact: FC = memo(() => (
   <Section>
     {window.innerWidth > 550 && (
-      <Suspense>
-        <ParticlesComponent preset="Triangle" id="triangle-tsparticles" />
-      </Suspense>
+      <Particles
+        amount={70}
+        direction="Down"
+        fps={24}
+        minSize={20}
+        preset="Triangle"
+        size={50}
+      />
     )}
     <Divider top={true} />
     <ContentSection>
