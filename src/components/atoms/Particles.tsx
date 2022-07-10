@@ -36,12 +36,12 @@ const opacityAnimate = (object: ICanvasObject, fps: number) => {
 const swayAnimate = (object: ICanvasObject, fps: number) => {
   if (object.transitions.sway.name === "left") {
     object.pos[0] -= 4 / fps;
-    if (object.pos[0] < object.pos[0] - object.size) {
+    if (object.pos[0] < object.initPos[0] - object.size) {
       object.transitions.sway.name = "right";
     }
   } else {
     object.pos[0] += 4 / fps;
-    if (object.pos[0] > object.pos[0] + object.size) {
+    if (object.pos[0] > object.initPos[0] + object.size) {
       object.transitions.sway.name = "left";
     }
   }
