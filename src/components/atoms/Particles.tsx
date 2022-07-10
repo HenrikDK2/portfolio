@@ -116,8 +116,6 @@ const getAmounts = (props: IParticlesProps): IParticlesProps["amount"] => {
 };
 
 const draw = ({ ctx, fps, preset, direction, objects }: IDraw) => {
-  const canvas = ctx.canvas;
-
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
   for (let i = 0; i < objects.length; i++) {
@@ -128,7 +126,7 @@ const draw = ({ ctx, fps, preset, direction, objects }: IDraw) => {
     ctx.fillStyle = "rgba(" + r + "," + g + "," + b + "," + a + ")";
     opacityAnimate(object, fps);
     swayAnimate(object, fps);
-    moveAnimate({ direction, object, canvas, fps });
+    moveAnimate({ direction, object, canvas: ctx.canvas, fps });
     ctx.beginPath();
 
     if (preset === "Triangle") {
@@ -138,7 +136,6 @@ const draw = ({ ctx, fps, preset, direction, objects }: IDraw) => {
     }
 
     if (preset === "Circle") {
-      ctx.beginPath();
       ctx.arc(x, y, object.size, 0, 2 * Math.PI);
     }
 

@@ -34,17 +34,15 @@ const ContentSection = styled("section")`
 
 export const Contact: FC = memo(() => (
   <Section>
-    {window.innerWidth > 550 && (
-      <Particles
-        amount={70}
-        direction="Down"
-        fps={24}
-        minSize={20}
-        preset="Triangle"
-        size={50}
-        amountBreakpoints={{ 500: 50, 1200: 70 }}
-      />
-    )}
+    <Particles
+      amount={30}
+      direction="Down"
+      fps={24}
+      minSize={20}
+      preset="Triangle"
+      size={50}
+      amountBreakpoints={{ 500: 50, 1200: 70, 1920: 90 }}
+    />
     <Divider top={true} />
     <ContentSection>
       <Form />

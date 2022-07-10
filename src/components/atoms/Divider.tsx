@@ -8,14 +8,10 @@ interface IDividerProps {
 }
 
 const dividerStyle = css`
-  display: none;
   position: absolute;
   left: 50%;
   width: 100vw;
   user-select: none;
-  @media (min-width: 500px) {
-    display: block;
-  }
 `;
 
 const topStyle = css`
