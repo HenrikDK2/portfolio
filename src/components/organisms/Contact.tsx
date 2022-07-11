@@ -13,7 +13,7 @@ const Section = styled("section")`
   }
 `;
 
-const ContentSection = styled("section")`
+const ContentContainer = styled("div")`
   display: flex;
   justify-content: space-around;
   max-width: 1515px;
@@ -44,9 +44,9 @@ export const Contact: FC = memo(() => (
       amountBreakpoints={{ 500: 50, 1200: 70, 1920: 90 }}
     />
     <Divider top={true} />
-    <ContentSection>
+    <ContentContainer>
       <Form />
       <ContactNotice />
-    </ContentSection>
+    </ContentContainer>
   </Section>
 ));
