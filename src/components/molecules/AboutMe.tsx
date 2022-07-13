@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { css, styled } from "goober";
 import { FaHeart, FaBriefcase, FaBirthdayCake } from "react-icons/fa";
-import useObserver from "preact-intersection-observer";
+import { useObserver } from "preact-intersection-observer";
 
 type StrDate = `${number}-${number}-${number}`;
 
@@ -144,7 +144,7 @@ const intersectOptions = {
 };
 
 export const AboutMe: FC = () => {
-  const [ref, inView] = useObserver(intersectOptions);
+  const [ref, inView] = useObserver<HTMLElement>(intersectOptions);
 
   return (
     <article

@@ -5,8 +5,8 @@ import { ProjectArray, ICarousel, Tags } from "../../types";
 import { ProjectTags } from "../molecules/ProjectTags";
 import { ProjectItem } from "../molecules/ProjectItem";
 import { ProjectsCarousel } from "./ProjectsCarousel";
+import { useObserver } from "preact-intersection-observer";
 import data from "../../data/projects.json";
-import useObserver from "preact-intersection-observer";
 import Shuffle from "shufflejs";
 
 const ProjectsSection = styled("section")`
@@ -74,7 +74,7 @@ const projects: ProjectArray = data;
 export const Projects: React.FC = memo(() => {
   const listRef = useRef<HTMLUListElement>(null);
   const shuffleInstance = useRef<Shuffle | null>(null);
-  const [ref, inView] = useObserver(intersectOptions);
+  const [ref, inView] = useObserver<HTMLElement>(intersectOptions);
   const [tags, setTags] = useState<Tags>([defaultTag]);
   const [carousel, setCarousel] = useState<ICarousel>({
     show: false,

@@ -1,11 +1,11 @@
 import { css, styled } from "goober";
-import useObserver from "preact-intersection-observer";
-import profilBilled from "../../images/profilBilled.jpg";
+import { useObserver } from "preact-intersection-observer";
 import { LineHeading } from "../atoms/LineHeading";
 import { Image } from "./Image";
 import { SkillArray } from "../../types";
 
 // Images
+import profilBilled from "../../images/profilBilled.jpg";
 import cssImage from "../../images/skills/css.png";
 import reactImage from "../../images/skills/react.png";
 import htmlImage from "../../images/skills/html.png";
@@ -167,7 +167,7 @@ const intersectOptions = {
 };
 
 export const Skills = () => {
-  const [ref, inView] = useObserver(intersectOptions);
+  const [ref, inView] = useObserver<HTMLElement>(intersectOptions);
 
   return (
     <article className={`${articleStyle} ${inView && inViewStyle}`} ref={ref}>
