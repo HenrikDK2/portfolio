@@ -3,6 +3,7 @@ import { css, styled } from "goober";
 
 interface IImageProps {
   containerClassName?: string;
+  lazy?: boolean;
 }
 
 const containerStyle = css`
@@ -24,10 +25,11 @@ export const Image: FC<IImageProps & HTMLProps<HTMLImageElement>> = ({
   src,
   className,
   containerClassName,
+  lazy = true,
 }) => (
   <div className={`${containerStyle} ${containerClassName}`}>
     <Img
-      loading="lazy"
+      loading={lazy ? "lazy" : undefined}
       onDragStart={(e) => e.preventDefault()}
       alt={alt}
       src={src}
