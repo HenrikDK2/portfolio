@@ -122,7 +122,7 @@ export const ProjectItem: FC<IProjectItemProps & Project> = memo(
         }}
       >
         <Heading>{title}</Heading>
-        <Image src={src} alt={alt} />
+        <Image lazy={false} src={src} alt={alt} />
       </Item>
     );
   }
