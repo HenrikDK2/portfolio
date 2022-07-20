@@ -1,7 +1,7 @@
 import { css, styled } from "goober";
 import { PrimaryButton } from "../atoms/Buttons";
 import { LineHeading } from "../atoms/LineHeading";
-import { useObserver } from "preact-intersection-observer";
+import { useInView } from "react-intersection-observer";
 
 const articleStyle = css`
   max-width: 430px;
@@ -48,7 +48,7 @@ const intersectOptions = {
 };
 
 export const ContactNotice = () => {
-  const [intersectRef, inView] = useObserver<HTMLElement>(intersectOptions);
+  const [intersectRef, inView] = useInView(intersectOptions);
 
   return (
     <article

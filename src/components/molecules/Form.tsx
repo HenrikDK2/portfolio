@@ -2,7 +2,7 @@ import { useState, FC } from "react";
 import { css, styled } from "goober";
 import { useForm } from "react-hook-form";
 import { PrimaryButton } from "../atoms/Buttons";
-import { useObserver } from "preact-intersection-observer";
+import { useInView } from "react-intersection-observer";
 import { LineHeading } from "../atoms/LineHeading";
 
 const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -137,7 +137,7 @@ type Response = {
 
 export const Form: FC = () => {
   const [response, setResponse] = useState<Response>();
-  const [intersectRef, inView] = useObserver<HTMLElement>(intersectOptions);
+  const [intersectRef, inView] = useInView(intersectOptions);
   const [disableButton, setDisableButton] = useState<boolean>(false);
   const [hideForm, setHideForm] = useState<boolean>(false);
   const {

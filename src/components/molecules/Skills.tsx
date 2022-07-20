@@ -1,5 +1,5 @@
 import { css, styled } from "goober";
-import { useObserver } from "preact-intersection-observer";
+import { useInView } from "react-intersection-observer";
 import { LineHeading } from "../atoms/LineHeading";
 import { Image } from "./Image";
 import { SkillArray } from "../../types";
@@ -167,7 +167,7 @@ const intersectOptions = {
 };
 
 export const Skills = () => {
-  const [ref, inView] = useObserver<HTMLElement>(intersectOptions);
+  const [ref, inView] = useInView(intersectOptions);
 
   return (
     <article className={`${articleStyle} ${inView && inViewStyle}`} ref={ref}>
