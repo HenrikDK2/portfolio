@@ -205,6 +205,7 @@ export const ProjectsCarousel: FC<IProjectsCarouselProps> = ({
           ? document.getElementById("alle-button") || undefined
           : undefined
       }
+      preventScrollToFocus={true}
     >
       <ModalWrapper>
         <Image

@@ -15,9 +15,14 @@ const baseStyle: CSSProperties = {
   transform: "translate(-50%,-50%)",
 };
 
-const focusTrapProps = (returnFocus: HTMLElement | undefined): Props => {
+const focusTrapProps = (
+  returnFocus: HTMLElement | undefined,
+  preventScroll: boolean
+): Props => {
   if (returnFocus) {
-    return { focusTrapOptions: { setReturnFocus: returnFocus } };
+    return {
+      focusTrapOptions: { setReturnFocus: returnFocus, preventScroll },
+    };
   }
 
   return {};
@@ -27,11 +32,18 @@ interface IModalProps {
   children: React.ReactNode;
   isOpen: boolean;
   returnFocus?: HTMLElement;
+  preventScrollToFocus?: boolean;
   HTMLProps?: React.HTMLProps<HTMLDivElement>;
 }
 
 export const Modal: FC<IModalProps> = memo(
-  ({ children, isOpen, HTMLProps, returnFocus }) => {
+  ({
+    children,
+    isOpen,
+    HTMLProps,
+    returnFocus,
+    preventScrollToFocus = false,
+  }) => {
     useEffect(() => {
       if (!document.getElementById(modalContainer.id)) {
         document.body.appendChild(modalContainer);
@@ -42,7 +54,7 @@ export const Modal: FC<IModalProps> = memo(
       if (root) root.setAttribute("aria-hidden", "true");
 
       return createPortal(
-        <FocusTrap {...focusTrapProps(returnFocus)}>
+        <FocusTrap {...focusTrapProps(returnFocus, preventScrollToFocus)}>
           <div role="dialog" style={baseStyle} {...HTMLProps}>
             {children}
           </div>
