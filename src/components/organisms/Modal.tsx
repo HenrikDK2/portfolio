@@ -18,15 +18,9 @@ const baseStyle: CSSProperties = {
 const focusTrapProps = (
   returnFocus: HTMLElement | undefined,
   preventScroll: boolean
-): Props => {
-  if (returnFocus) {
-    return {
-      focusTrapOptions: { setReturnFocus: returnFocus, preventScroll },
-    };
-  }
-
-  return {};
-};
+): Props => ({
+  focusTrapOptions: { setReturnFocus: returnFocus, preventScroll },
+});
 
 interface IModalProps {
   children: React.ReactNode;
