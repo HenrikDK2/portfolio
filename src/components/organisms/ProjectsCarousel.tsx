@@ -170,6 +170,7 @@ export const ProjectsCarousel: FC<IProjectsCarouselProps> = ({
       swiperRef?.current?.el &&
       !swiperRef.current.el.contains(e.target as Node)
     ) {
+      document.documentElement.style.overflowY = "scroll";
       setExitModal(true);
       document.removeEventListener("mousedown", handleClickOutside);
     }
@@ -183,8 +184,7 @@ export const ProjectsCarousel: FC<IProjectsCarouselProps> = ({
   }, []);
 
   useEffect(() => {
-    if (!carousel.show) document.documentElement.style.overflowY = "scroll";
-    else if (carousel.show) document.documentElement.style.overflowY = "hidden";
+    if (carousel.show) document.documentElement.style.overflowY = "hidden";
   }, [carousel]);
 
   return (
