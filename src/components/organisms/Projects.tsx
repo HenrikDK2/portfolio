@@ -75,6 +75,8 @@ export const Projects: React.FC = memo(() => {
   const listRef = useRef<HTMLUListElement>(null);
   const shuffleInstance = useRef<Shuffle | null>(null);
   const [ref, inView] = useInView(intersectOptions);
+  const [filteredProjects, setFilteredProjects] =
+    useState<ProjectArray>(projects);
   const [tags, setTags] = useState<Tags>([defaultTag]);
   const [carousel, setCarousel] = useState<ICarousel>({
     show: false,
@@ -100,27 +102,30 @@ export const Projects: React.FC = memo(() => {
       >
         <Heading>Mine Projekter</Heading>
         <ProjectTags
+          setFilteredProjects={setFilteredProjects}
           shuffleInstance={shuffleInstance.current}
           defaultTag={defaultTag}
           tags={tags}
           setTags={setTags}
         />
         <ul className={listStyle} ref={listRef}>
-          {projects?.map((data, i) => (
+          {projects?.map((data) => (
             <ProjectItem
               {...data}
-              i={i}
+              i={filteredProjects.findIndex((e) => data.title === e.title)}
               setCarousel={setCarousel}
               carousel={carousel}
             />
           ))}
         </ul>
       </article>
-      <ProjectsCarousel
-        carousel={carousel}
-        setCarousel={setCarousel}
-        projects={projects}
-      />
+      {shuffleInstance.current && (
+        <ProjectsCarousel
+          carousel={carousel}
+          setCarousel={setCarousel}
+          projects={filteredProjects!}
+        />
+      )}
     </ProjectsSection>
   );
 });

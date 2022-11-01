@@ -1,4 +1,4 @@
-import { FC, Dispatch, memo, useLayoutEffect, useState } from "react";
+import { FC, Dispatch, useLayoutEffect, useState } from "react";
 import { styled, css } from "goober";
 import { Image } from "./Image";
 import { ICarousel, Project, Tags } from "../../types";
@@ -87,43 +87,49 @@ const dataGroup = (tags: Tags) => {
   return `[${groups}]`;
 };
 
-export const ProjectItem: FC<IProjectItemProps & Project> = memo(
-  ({ setCarousel, carousel, title, src, tags, alt, i }) => {
-    const [phoneMode, setPhoneMode] = useState<boolean>(
-      window.innerWidth <= 500 || false
-    );
+export const ProjectItem: FC<IProjectItemProps & Project> = ({
+  setCarousel,
+  carousel,
+  title,
+  src,
+  tags,
+  alt,
+  i,
+}) => {
+  const [phoneMode, setPhoneMode] = useState<boolean>(
+    window.innerWidth <= 500 || false
+  );
 
-    useLayoutEffect(() => {
-      const updateFunction = () => {
-        const innerWidth = window.innerWidth;
-        if (phoneMode && innerWidth > 500) setPhoneMode(false);
-        if (!phoneMode && innerWidth < 500) setPhoneMode(true);
-      };
+  useLayoutEffect(() => {
+    const updateFunction = () => {
+      const innerWidth = window.innerWidth;
+      if (phoneMode && innerWidth > 500) setPhoneMode(false);
+      if (!phoneMode && innerWidth < 500) setPhoneMode(true);
+    };
 
-      window.addEventListener("resize", updateFunction, { passive: true });
-      return () => window.removeEventListener("resize", updateFunction);
-    }, [phoneMode]);
+    window.addEventListener("resize", updateFunction, { passive: true });
+    return () => window.removeEventListener("resize", updateFunction);
+  }, [phoneMode]);
 
-    return (
-      <Item
-        className={`project-item ${phoneMode && gridItemPhone}`}
-        data-groups={dataGroup(tags)}
-        key={title}
-        tabIndex={0}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" && !carousel.show) {
-            setCarousel({ index: i, show: true });
-          }
-        }}
-        onClick={() => {
-          if (!carousel.show) {
-            setCarousel({ index: i, show: true });
-          }
-        }}
-      >
-        <Heading>{title}</Heading>
-        <Image lazy={false} src={src} alt={alt} />
-      </Item>
-    );
-  }
-);
+  return (
+    <Item
+      className={`project-item ${phoneMode && gridItemPhone}`}
+      data-groups={dataGroup(tags)}
+      key={title}
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" && !carousel.show) {
+          setCarousel({ index: i, show: true });
+        }
+      }}
+      onClick={() => {
+        if (!carousel.show) {
+          setCarousel({ index: i, show: true });
+        }
+      }}
+    >
+      <Heading>{title}</Heading>
+      <Image lazy={false} src={src} alt={alt} />
+    </Item>
+  );
+};

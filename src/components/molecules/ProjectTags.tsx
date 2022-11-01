@@ -45,6 +45,15 @@ const activeTagStyle = css`
   box-shadow: 0px 0px 5px 0 rgba(0, 0, 0, 0.3);
 `;
 
+const filterProjectsTags = (newTags: Tags): ProjectArray => {
+  return projects.filter((e) => {
+    for (const tag of newTags) {
+      if (!e.tags.includes(tag)) return false;
+    }
+    return true;
+  });
+};
+
 const projects: ProjectArray = data;
 
 const allTags = [...new Set(projects.map((e) => e.tags).flat())];
@@ -53,6 +62,7 @@ interface IProjectTagsProps {
   tags: Tags;
   shuffleInstance: Shuffle | null;
   setTags: Dispatch<Tags>;
+  setFilteredProjects: Dispatch<ProjectArray>;
   defaultTag: string;
 }
 
@@ -64,6 +74,7 @@ interface IClickHandler {
 export const ProjectTags: FC<IProjectTagsProps> = ({
   tags,
   setTags,
+  setFilteredProjects,
   shuffleInstance,
   defaultTag,
 }) => {
@@ -73,12 +84,14 @@ export const ProjectTags: FC<IProjectTagsProps> = ({
 
       if (tag === defaultTag) {
         setTags([defaultTag]);
+        setFilteredProjects(projects);
         shuffleInstance?.filter();
         return;
       }
 
       if (tags.includes(defaultTag)) {
         setTags([tag]);
+        setFilteredProjects(projects.filter((e) => e.tags.includes(tag)));
         shuffleInstance?.filter(tag);
         return;
       }
@@ -86,17 +99,29 @@ export const ProjectTags: FC<IProjectTagsProps> = ({
       if (tags.includes(tag)) {
         const newTags = tags.filter((e) => e !== tag);
         setTags(newTags.length > 0 ? newTags : [defaultTag]);
+        setFilteredProjects(filterProjectsTags(newTags));
         shuffleInstance?.filter(
           newTags.length > 0 ? newTags : Shuffle.ALL_ITEMS
         );
         return;
       } else {
         const newTags = [...tags, tag];
-        setTags([...tags, tag]);
-        shuffleInstance?.filter(newTags);
+        const newProjects = filterProjectsTags(newTags);
+
+        //@ts-ignore
+        if (newProjects) setFilteredProjects(newProjects);
+        setTags(newTags);
+        shuffleInstance?.filter((e) => {
+          for (const tag of newTags) {
+            if (!e.getAttribute("data-groups")!.includes(tag)) {
+              return false;
+            }
+          }
+          return true;
+        });
       }
     },
-    [tags, shuffleInstance, defaultTag, setTags]
+    [tags, shuffleInstance, defaultTag, setTags, setFilteredProjects]
   );
 
   return (
