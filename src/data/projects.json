@@ -2,10 +2,10 @@
   {
     "title": "React CMS",
     "paragraphs": [
-      "Et kort eksempel på et CMS system. Jeg arbejde med Drag and Drop API, og redigerende indhold i form af et CMS system.",
-      "Projektet er bygget i React, men kompilere til Preact. Jeg fik arbejde med Tailwind, Redux, Typescript og React i dette projekt."
+      "Et kort eksempel på et CMS system. Jeg arbejde med HTML Drag and Drop API, og redigerende indhold i form af et CMS system.",
+      "Projektet er bygget i React, men kompilere til Preact. Jeg fik arbejde med Tailwind, Redux Toolkit, Typescript og React i dette projekt."
     ],
-    "alt": "Billed af mit CMS systemet, klik her for flere oplysninger",
+    "alt": "Billed af mit CMS system, klik her for flere oplysninger",
     "src": "./react-cms.jpg",
     "tags": ["Responsive"],
     "href": "https://react-cms-project.netlify.app/"
