@@ -30,7 +30,7 @@ const TagButton = styled("button")`
   background: none;
   transition: all 0.5s ease 0s;
   cursor: pointer;
-  font-family: var(--mainFont);
+  font-family: "Roboto";
   padding: 5px 10px;
   user-select: none;
   font-size: 1rem;

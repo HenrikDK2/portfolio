@@ -7,7 +7,7 @@ type StrDate = `${number}-${number}-${number}`;
 
 const TableBody = styled("tbody")`
   display: flex;
-  margin: 30px 0 0 0px;
+  margin: 30px 0 0 0;
   width: 100%;
   align-items: center;
   font-size: 2.25rem;
@@ -131,51 +131,34 @@ const inViewStyle = css`
   animation: fadeUp 1s forwards;
 `;
 
-const getAge = (birthDate: StrDate) =>
-  Math.floor(
-    ((new Date() as any) - new Date(birthDate).getTime()) / 3.15576e10
-  );
+const getAge = (birthDate: StrDate) => Math.floor(((new Date() as any) - new Date(birthDate).getTime()) / 3.15576e10);
 
 const intersectOptions = {
   triggerOnce: true,
   threshold: window.innerWidth < 500 ? 0.15 : 0.2,
-  rootMargin:
-    window.innerWidth < 500 ? "0px 0px 0px 0px" : "0px 0px -200px 0px",
+  rootMargin: window.innerWidth < 500 ? "0px 0px 0px 0px" : "0px 0px -200px 0px",
 };
 
 export const AboutMe: FC = () => {
   const [ref, inView] = useInView(intersectOptions);
 
   return (
-    <article
-      id="aboutMe"
-      ref={ref}
-      className={`${articleStyle} ${inView && inViewStyle}`}
-    >
+    <article id="aboutMe" ref={ref} className={`${articleStyle} ${inView && inViewStyle}`}>
       <Heading>Omkring mig</Heading>
-      <Info className={firstInfo}>
-        Hej mit navn er Henrik, og jeg er en frisk Front-end Webudvikler fra
-        København.
+      <Info className={firstInfo}>Hej mit navn er Henrik, og jeg er en frisk Front-end Webudvikler fra København.</Info>
+      <Info>Jeg har altid været fascineret af programmering, og det har været en af mine mange hobbyer.</Info>
+      <Info>
+        Jeg er fra min hobby blevet uddannet med et stort drive for at forbedrer mig selv og lære nye teknologier.
       </Info>
       <Info>
-        Jeg har altid været fascineret af programmering, og det har været en af
-        mine mange hobbyer.
+        Jeg er ambitiøs om mine projekter, og prøver altid at udvikle mine hjemmesider smartere og bedre end før.
       </Info>
       <Info>
-        Jeg er fra min hobby blevet uddannet med et stort drive for at forbedrer
-        mig selv og lære nye teknologier.
-      </Info>
-      <Info>
-        Jeg er ambitiøs om mine projekter, og prøver altid at udvikle mine
-        hjemmesider smartere og bedre end før.
-      </Info>
-      <Info>
-        Min portfolio hjemmeside er lavede i Preact, og mit mål er at opnå flere
-        kompetencer, og at udvikle fede produkter.
+        Min portfolio hjemmeside er lavede i Preact, og mit mål er at opnå flere kompetencer, og at udvikle fede
+        produkter.
       </Info>
       <Info className={lastInfo}>
-        Jeg udvikler altid med fokus på semantik, ydeevne, tilgængelighed og
-        responsive hjemmesider.
+        Jeg udvikler altid med fokus på semantik, ydeevne, tilgængelighed og responsive hjemmesider.
       </Info>
       <table>
         <TableBody>

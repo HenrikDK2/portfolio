@@ -20,7 +20,7 @@ const tip = css`
 `;
 
 const fadeOut = css`
-  animation: fadeTextOut 1s forwards;
+  animation: fadeOut 1s forwards;
 `;
 
 interface ISwiperReminder {

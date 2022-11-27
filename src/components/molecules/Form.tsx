@@ -16,7 +16,6 @@ const FormElem = styled("form")`
   box-sizing: border-box;
   padding: 0 1rem;
   row-gap: 10px;
-  color: var(--color);
   & input,
   textarea {
     font-size: 1.5rem;
@@ -164,9 +163,7 @@ export const Form: FC = () => {
     display: ${hideForm ? "none" : "block"};
   `;
 
-  const articleContactStyle = `${articleKontakt} ${hideFormInline} ${
-    inView && fadeUpAnim
-  }`;
+  const articleContactStyle = `${articleKontakt} ${hideFormInline} ${inView && fadeUpAnim}`;
 
   return (
     <article
@@ -201,15 +198,12 @@ export const Form: FC = () => {
               },
               pattern: {
                 value: phonePattern,
-                message:
-                  "Telefon nummer må ikke indeholde bogstaver eller tommefelter",
+                message: "Telefon nummer må ikke indeholde bogstaver eller tommefelter",
               },
             })}
           />
         </label>
-        <span className={spanStyle}>
-          {errors.phone && errors.phone.message}
-        </span>
+        <span className={spanStyle}>{errors.phone && errors.phone.message}</span>
         <label htmlFor="email" aria-label="Email inputfelt">
           <input
             placeholder="Email*"
@@ -218,15 +212,12 @@ export const Form: FC = () => {
               required: { value: true, message: "Dette felt er påkrævet" },
               pattern: {
                 value: emailPattern,
-                message:
-                  "Email er ikke gyldig, dette er et eksempel på en gyldig email: example@live.dk",
+                message: "Email er ikke gyldig, dette er et eksempel på en gyldig email: example@live.dk",
               },
             })}
           />
         </label>
-        <span className={spanStyle}>
-          {errors.email && errors.email.message}
-        </span>
+        <span className={spanStyle}>{errors.email && errors.email.message}</span>
         <label htmlFor="name" aria-label="Besked inputfelt">
           <textarea
             placeholder="Besked*"
@@ -237,16 +228,13 @@ export const Form: FC = () => {
             })}
           />
         </label>
-        <span className={spanStyle}>
-          {errors.message && errors.message.message}
-        </span>
+        <span className={spanStyle}>{errors.message && errors.message.message}</span>
         {response && response.status === 200 ? (
           <SuccessMsg>Email var sendt 😄</SuccessMsg>
         ) : (
           response && (
             <ErrorMsg>
-              Fejl besked: {response && response?.body} (
-              {response && response.status})
+              Fejl besked: {response && response?.body} ({response && response.status})
             </ErrorMsg>
           )
         )}

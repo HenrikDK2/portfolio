@@ -137,10 +137,7 @@ export const Header: FC = memo(() => {
   return (
     <header ref={ref}>
       {menuHidden && (
-        <BarsButton
-          aria-label="Burger Menu"
-          onClick={() => setMenuHidden(!menuHidden)}
-        >
+        <BarsButton aria-label="Burger Menu" onClick={() => setMenuHidden(!menuHidden)}>
           <FaBars />
         </BarsButton>
       )}
@@ -149,18 +146,12 @@ export const Header: FC = memo(() => {
         <NavList>
           <TitleItem>Henrik Mundt Milo</TitleItem>
           <li>
-            <NavLink
-              href="/"
-              onClick={(e) => clickLinkHandler(e, "aboutMe", "start")}
-            >
+            <NavLink href="/" onClick={(e) => clickLinkHandler(e, "aboutMe", "start")}>
               Omkring Mig
             </NavLink>
           </li>
           <li>
-            <NavLink
-              href="/"
-              onClick={(e) => clickLinkHandler(e, "projects", "start")}
-            >
+            <NavLink href="/" onClick={(e) => clickLinkHandler(e, "projects", "start")}>
               Mine Projekter
             </NavLink>
           </li>
