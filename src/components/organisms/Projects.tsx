@@ -5,7 +5,7 @@ import { Project, ICarousel, Tags } from "../../types";
 import { ProjectTags } from "../molecules/ProjectTags";
 import { ProjectsCarousel } from "./ProjectsCarousel";
 import { useInView } from "react-intersection-observer";
-import data from "../../data/projects.json";
+import unfiteredProjects from "../../data/projects.json";
 import { GridLayout } from "../../utils/gridLayout";
 import { ProjectItem } from "../molecules/ProjectItem";
 
@@ -71,7 +71,7 @@ export const defaultTag = "Alle";
 export const Projects: React.FC = memo(() => {
   const listRef = useRef<HTMLUListElement>(null);
   const [gridInstance, setGridInstance] = useState<GridLayout>();
-  const [projects, setProjects] = useState<Project[]>(data);
+  const [projects, setProjects] = useState<Project[]>(unfiteredProjects);
   const [ref, inView] = useInView(intersectOptions);
   const [tags, setTags] = useState<Tags>([defaultTag]);
   const [carousel, setCarousel] = useState<ICarousel>({
@@ -98,8 +98,13 @@ export const Projects: React.FC = memo(() => {
           setProjects={setProjects}
         />
         <ul ref={listRef} className={listStyle}>
-          {data?.map((data, i) => (
-            <ProjectItem {...data} i={i} setCarousel={setCarousel} carousel={carousel} />
+          {unfiteredProjects?.map((data) => (
+            <ProjectItem
+              {...data}
+              i={projects.findIndex((e) => e.title === data.title)}
+              setCarousel={setCarousel}
+              carousel={carousel}
+            />
           ))}
         </ul>
       </article>
