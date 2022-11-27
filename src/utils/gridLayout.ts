@@ -28,7 +28,7 @@ export class GridLayout {
     this.cols = maxColumns;
     this.colWidth = clientWidth;
     this.colHeight = clientHeight;
-    this.renderLayout();
+    this.renderLayout(true);
 
     const resizeEvent = () => {
       clearTimeout(this.resizeTimeout);
@@ -39,7 +39,7 @@ export class GridLayout {
     window.addEventListener("resize", () => resizeEvent());
   }
 
-  renderLayout() {
+  renderLayout(disableTransition?: boolean) {
     this.calcColumns();
 
     const { colHeight, colWidth, cols, gap } = this;
@@ -57,6 +57,12 @@ export class GridLayout {
       if (i % cols === cols - 1) {
         rowMultiplier += 1;
         gapMultiplier = 0;
+      }
+
+      if (disableTransition) {
+        el.style.transition = "none";
+      } else {
+        el.style.transition = "all .4s ease";
       }
 
       el.style.transform = `translate(${x}px, ${y}px)`;
@@ -85,6 +91,7 @@ export class GridLayout {
       for (const tag of tags) {
         if (!elTags?.includes(tag)) {
           el.setAttribute("aria-hidden", "true");
+          el.style.transition = "all .4s ease";
           el.style.transform = el.style.transform + " scale(0)";
           el.style.opacity = "0";
           return false;
@@ -92,6 +99,7 @@ export class GridLayout {
       }
 
       el.setAttribute("aria-hidden", "false");
+      el.style.transition = "all .4s ease";
       el.style.opacity = "1";
       return true;
     });

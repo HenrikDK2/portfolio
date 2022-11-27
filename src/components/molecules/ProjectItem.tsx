@@ -11,7 +11,6 @@ interface IProjectItemProps {
 
 const Item = styled("li")`
   position: absolute;
-  transition: all 0.4s ease;
   user-select: none;
   width: 350px;
   height: 200px;
