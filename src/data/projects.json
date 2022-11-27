@@ -1,9 +1,20 @@
 [
   {
+    "title": "Password Generator",
+    "paragraphs": [
+      "I dette projekt vil jeg gerne prøve Stiches, et zero runtime CSS in JS bibliotek. Jeg byggede en fleksibel Password Generator, da et bibliotek i sig selv ikke er interessant nok.",
+      "Jeg fik arbejde med Stitches, Typescript og React i dette projekt."
+    ],
+    "alt": "Billed af mit Password generator, klik her for flere oplysninger",
+    "src": "./password-generator.jpg",
+    "tags": ["Responsive"],
+    "href": "https://frabjous-torte-eadfe9.netlify.app/"
+  },
+  {
     "title": "React CMS",
     "paragraphs": [
       "Et kort eksempel på et CMS system. Jeg arbejde med HTML Drag and Drop API, og redigerende indhold i form af et CMS system.",
-      "Projektet er bygget i React, men kompilere til Preact. Jeg fik arbejde med Tailwind, Redux Toolkit, Typescript og React i dette projekt."
+      "Projektet er bygge i React, men kompilere til Preact. Jeg fik arbejde med Tailwind, Redux Toolkit, Typescript og React i dette projekt."
     ],
     "alt": "Billed af mit CMS system, klik her for flere oplysninger",
     "src": "./react-cms.jpg",
