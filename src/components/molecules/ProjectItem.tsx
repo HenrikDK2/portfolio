@@ -1,7 +1,7 @@
 import { FC, Dispatch, useLayoutEffect, useState } from "react";
 import { styled, css } from "goober";
 import { Image } from "./Image";
-import { ICarousel, Project, Tags } from "../../types";
+import { ICarousel, Project } from "../../types";
 
 interface IProjectItemProps {
   setCarousel: Dispatch<ICarousel>;
@@ -10,14 +10,11 @@ interface IProjectItemProps {
 }
 
 const Item = styled("li")`
-  position: relative;
+  position: absolute;
+  transition: all 0.4s ease;
   user-select: none;
   width: 350px;
   height: 200px;
-  margin: 0 auto 10px;
-  & > h2::after {
-    width: 20%;
-  }
 
   & > div {
     overflow: hidden;
@@ -61,13 +58,12 @@ const Heading = styled("h2")`
   margin: 0;
   top: 50%;
   z-index: 2;
+  &::after {
+    width: 20%;
+  }
 `;
 
 const gridItemPhone = css`
-  margin-top: 35px !important;
-  &:first-child {
-    margin-top: 0 !important;
-  }
   & > div::after {
     opacity: 0.75;
   }
@@ -81,24 +77,8 @@ const gridItemPhone = css`
   }
 `;
 
-const dataGroup = (tags: Tags) => {
-  const groups = tags.map((e) => `"${e}"`);
-
-  return `[${groups}]`;
-};
-
-export const ProjectItem: FC<IProjectItemProps & Project> = ({
-  setCarousel,
-  carousel,
-  title,
-  src,
-  tags,
-  alt,
-  i,
-}) => {
-  const [phoneMode, setPhoneMode] = useState<boolean>(
-    window.innerWidth <= 500 || false
-  );
+export const ProjectItem: FC<IProjectItemProps & Project> = ({ setCarousel, carousel, title, src, alt, tags, i }) => {
+  const [phoneMode, setPhoneMode] = useState<boolean>(window.innerWidth <= 500 || false);
 
   useLayoutEffect(() => {
     const updateFunction = () => {
@@ -114,9 +94,10 @@ export const ProjectItem: FC<IProjectItemProps & Project> = ({
   return (
     <Item
       className={`project-item ${phoneMode && gridItemPhone}`}
-      data-groups={dataGroup(tags)}
       key={title}
       tabIndex={0}
+      data-tags={tags}
+      aria-hidden="false"
       onKeyDown={(e) => {
         if (e.key === "Enter" && !carousel.show) {
           setCarousel({ index: i, show: true });

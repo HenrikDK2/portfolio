@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import "swiper/css";
 import React, { FC, useEffect, useRef, useState } from "react";
-import { ICarousel, ProjectArray } from "../../types";
+import { ICarousel, Project } from "../../types";
 import { Swiper, SwiperSlide } from "swiper/react";
 import ISwiper from "swiper/types/swiper-class";
 import { Modal } from "./Modal";
@@ -14,7 +14,7 @@ import exitSvg from "../../assets/exit.svg";
 interface IProjectsCarouselProps {
   carousel: ICarousel;
   setCarousel: React.Dispatch<ICarousel>;
-  projects: ProjectArray;
+  projects: Project[];
 }
 
 const SlideLink = styled(PrimaryButton)`
@@ -136,9 +136,7 @@ const a11y = {
 };
 
 const handleSlideTransitionChange = (e: ISwiper) => {
-  const slide = e.el.querySelectorAll(".swiper-slide")[
-    e.activeIndex
-  ] as HTMLDivElement;
+  const slide = e.el.querySelectorAll(".swiper-slide")[e.activeIndex] as HTMLDivElement;
   slide.focus();
 };
 
@@ -156,20 +154,13 @@ const handleOnKeyDown = (
   }
 };
 
-export const ProjectsCarousel: FC<IProjectsCarouselProps> = ({
-  carousel,
-  setCarousel,
-  projects,
-}) => {
+export const ProjectsCarousel: FC<IProjectsCarouselProps> = ({ carousel, setCarousel, projects }) => {
   const swiperRef = useRef<ISwiper | null>();
   const [showTip, setShowTip] = useState<boolean>(true);
   const [exitModal, setExitModal] = useState<boolean>(false);
 
   const handleClickOutside = (e: MouseEvent) => {
-    if (
-      swiperRef?.current?.el &&
-      !swiperRef.current.el.contains(e.target as Node)
-    ) {
+    if (swiperRef?.current?.el && !swiperRef.current.el.contains(e.target as Node)) {
       document.documentElement.style.overflowY = "scroll";
       setExitModal(true);
       document.removeEventListener("mousedown", handleClickOutside);
@@ -200,11 +191,7 @@ export const ProjectsCarousel: FC<IProjectsCarouselProps> = ({
         },
       }}
       isOpen={carousel.show}
-      returnFocus={
-        window.innerWidth > 550
-          ? document.getElementById("alle-button") || undefined
-          : undefined
-      }
+      returnFocus={window.innerWidth > 550 ? document.getElementById("alle-button") || undefined : undefined}
       preventScrollToFocus={true}
     >
       <ModalWrapper>
@@ -227,10 +214,7 @@ export const ProjectsCarousel: FC<IProjectsCarouselProps> = ({
         >
           {projects.map(({ title, src, alt, paragraphs, href, button }) => (
             <SwiperSlide
-              onKeyDown={(e) =>
-                swiperRef.current &&
-                handleOnKeyDown(e, setExitModal, swiperRef.current)
-              }
+              onKeyDown={(e) => swiperRef.current && handleOnKeyDown(e, setExitModal, swiperRef.current)}
               tabIndex={0}
               tag="article"
             >

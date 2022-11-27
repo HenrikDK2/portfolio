@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { css } from "goober";
-import { ProjectArray } from "../../types";
+import { Project } from "../../types";
 
 const tip = css`
   font-size: 1rem;
@@ -24,17 +24,14 @@ const fadeOut = css`
 `;
 
 interface ISwiperReminder {
-  projects: ProjectArray;
+  projects: Project[];
   showTip: boolean;
 }
 
 export const SwiperReminder: FC<ISwiperReminder> = ({ projects, showTip }) => {
   if (!sessionStorage.getItem("hideH5") && projects.length > 1) {
     return (
-      <h5
-        onAnimationEnd={() => sessionStorage.setItem("hideH5", "true")}
-        className={`${tip} ${!showTip && fadeOut}`}
-      >
+      <h5 onAnimationEnd={() => sessionStorage.setItem("hideH5", "true")} className={`${tip} ${!showTip && fadeOut}`}>
         Swipe/drag for at tjekke andre projekter
       </h5>
     );

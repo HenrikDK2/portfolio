@@ -20,6 +20,4 @@ export interface IInit {
 
 export type SkillArray = Array<{ src: string; alt: string }>;
 
-export type ProjectArray = Array<Project>;
-
 export type Tags = string[];

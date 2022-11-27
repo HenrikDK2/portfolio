@@ -1,13 +1,13 @@
-import { memo, useState, useEffect, useRef } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { css, styled } from "goober";
 import { LineHeading } from "../atoms/LineHeading";
-import { ProjectArray, ICarousel, Tags } from "../../types";
+import { Project, ICarousel, Tags } from "../../types";
 import { ProjectTags } from "../molecules/ProjectTags";
-import { ProjectItem } from "../molecules/ProjectItem";
 import { ProjectsCarousel } from "./ProjectsCarousel";
 import { useInView } from "react-intersection-observer";
 import data from "../../data/projects.json";
-import Shuffle from "shufflejs";
+import { GridLayout } from "../../utils/gridLayout";
+import { ProjectItem } from "../molecules/ProjectItem";
 
 const ProjectsSection = styled("section")`
   padding: 300px 0;
@@ -24,25 +24,18 @@ const ProjectsSection = styled("section")`
   }
 `;
 
-const listStyle = css`
-  list-style: none;
-  padding: 0;
-  max-width: 1200px;
-`;
-
 const Heading = styled(LineHeading)`
   margin-bottom: 100px;
 `;
 
 const gridArticle = css`
+  display: flex;
+  flex-direction: column;
+  min-height: 838px;
   max-width: 1070px;
   opacity: 0;
   padding: 0 1rem;
-  flex-direction: column;
   margin: 0 auto;
-  display: flex;
-  transition: 0.25s all;
-  min-height: 838px;
 
   & > h2 {
     margin: 46px 0;
@@ -57,7 +50,12 @@ const gridArticle = css`
   }
 `;
 
-const defaultTag = "Alle";
+const listStyle = css`
+  list-style: none;
+  padding: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+`;
 
 const inViewStyle = css`
   animation: fadeUp 1s forwards;
@@ -69,14 +67,12 @@ const intersectOptions = {
   rootMargin: "0px 0px -250px 0px",
 };
 
-const projects: ProjectArray = data;
-
+export const defaultTag = "Alle";
 export const Projects: React.FC = memo(() => {
   const listRef = useRef<HTMLUListElement>(null);
-  const shuffleInstance = useRef<Shuffle | null>(null);
+  const [gridInstance, setGridInstance] = useState<GridLayout>();
+  const [projects, setProjects] = useState<Project[]>(data);
   const [ref, inView] = useInView(intersectOptions);
-  const [filteredProjects, setFilteredProjects] =
-    useState<ProjectArray>(projects);
   const [tags, setTags] = useState<Tags>([defaultTag]);
   const [carousel, setCarousel] = useState<ICarousel>({
     show: false,
@@ -84,48 +80,30 @@ export const Projects: React.FC = memo(() => {
   });
 
   useEffect(() => {
-    if (listRef.current && shuffleInstance.current === null) {
-      shuffleInstance.current = new Shuffle(listRef.current, {
-        itemSelector: ".project-item",
-        gutterWidth: 10,
-        isCentered: true,
-      });
+    if (listRef.current && !gridInstance) {
+      const instance = new GridLayout({ gap: 10, list: listRef.current, maxColumns: 3, itemSelector: ".project-item" });
+      setGridInstance(instance);
     }
-  }, [listRef, shuffleInstance]);
+  }, [listRef, gridInstance]);
 
   return (
     <ProjectsSection>
-      <article
-        id="projects"
-        className={`${gridArticle} ${inView && inViewStyle}`}
-        ref={ref}
-      >
+      <article id="projects" className={`${gridArticle} ${inView && inViewStyle}`} ref={ref}>
         <Heading>Mine Projekter</Heading>
         <ProjectTags
-          setFilteredProjects={setFilteredProjects}
-          shuffleInstance={shuffleInstance.current}
           defaultTag={defaultTag}
           tags={tags}
           setTags={setTags}
+          gridInstance={gridInstance}
+          setProjects={setProjects}
         />
-        <ul className={listStyle} ref={listRef}>
-          {projects?.map((data) => (
-            <ProjectItem
-              {...data}
-              i={filteredProjects.findIndex((e) => data.title === e.title)}
-              setCarousel={setCarousel}
-              carousel={carousel}
-            />
+        <ul ref={listRef} className={listStyle}>
+          {data?.map((data, i) => (
+            <ProjectItem {...data} i={i} setCarousel={setCarousel} carousel={carousel} />
           ))}
         </ul>
       </article>
-      {shuffleInstance.current && (
-        <ProjectsCarousel
-          carousel={carousel}
-          setCarousel={setCarousel}
-          projects={filteredProjects!}
-        />
-      )}
+      <ProjectsCarousel carousel={carousel} setCarousel={setCarousel} projects={projects} />
     </ProjectsSection>
   );
 });

@@ -1,8 +1,8 @@
 import { FC, Dispatch, useCallback } from "react";
 import { css, styled } from "goober";
 import data from "../../data/projects.json";
-import { ProjectArray, Tags } from "../../types";
-import Shuffle from "shufflejs";
+import { Project, Tags } from "../../types";
+import { GridLayout } from "../../utils/gridLayout";
 
 const GridCategories = styled("ul")`
   display: flex;
@@ -45,24 +45,15 @@ const activeTagStyle = css`
   box-shadow: 0px 0px 5px 0 rgba(0, 0, 0, 0.3);
 `;
 
-const filterProjectsTags = (newTags: Tags): ProjectArray => {
-  return projects.filter((e) => {
-    for (const tag of newTags) {
-      if (!e.tags.includes(tag)) return false;
-    }
-    return true;
-  });
-};
-
-const projects: ProjectArray = data;
+const projects: Project[] = data;
 
 const allTags = [...new Set(projects.map((e) => e.tags).flat())];
 
 interface IProjectTagsProps {
   tags: Tags;
-  shuffleInstance: Shuffle | null;
+  gridInstance: GridLayout | undefined;
+  setProjects: React.Dispatch<Project[]>;
   setTags: Dispatch<Tags>;
-  setFilteredProjects: Dispatch<ProjectArray>;
   defaultTag: string;
 }
 
@@ -71,57 +62,36 @@ interface IClickHandler {
   tag: string;
 }
 
-export const ProjectTags: FC<IProjectTagsProps> = ({
-  tags,
-  setTags,
-  setFilteredProjects,
-  shuffleInstance,
-  defaultTag,
-}) => {
+export const ProjectTags: FC<IProjectTagsProps> = ({ tags, setTags, defaultTag, gridInstance, setProjects }) => {
   const clickHandler = useCallback(
     ({ e, tag }: IClickHandler) => {
       e.preventDefault();
-
       if (tag === defaultTag) {
         setTags([defaultTag]);
-        setFilteredProjects(projects);
-        shuffleInstance?.filter();
+        setProjects(gridInstance!.filter(projects, [defaultTag]));
         return;
       }
 
       if (tags.includes(defaultTag)) {
         setTags([tag]);
-        setFilteredProjects(projects.filter((e) => e.tags.includes(tag)));
-        shuffleInstance?.filter(tag);
+        setProjects(gridInstance!.filter(projects, [tag]));
         return;
       }
 
       if (tags.includes(tag)) {
-        const newTags = tags.filter((e) => e !== tag);
-        setTags(newTags.length > 0 ? newTags : [defaultTag]);
-        setFilteredProjects(filterProjectsTags(newTags));
-        shuffleInstance?.filter(
-          newTags.length > 0 ? newTags : Shuffle.ALL_ITEMS
-        );
+        const filterTags = tags.filter((e) => e !== tag);
+        const newTags = filterTags.length > 0 ? filterTags : [defaultTag];
+        setTags(newTags);
+        setProjects(gridInstance!.filter(projects, newTags));
         return;
       } else {
         const newTags = [...tags, tag];
-        const newProjects = filterProjectsTags(newTags);
-
         //@ts-ignore
-        if (newProjects) setFilteredProjects(newProjects);
         setTags(newTags);
-        shuffleInstance?.filter((e) => {
-          for (const tag of newTags) {
-            if (!e.getAttribute("data-groups")!.includes(tag)) {
-              return false;
-            }
-          }
-          return true;
-        });
+        setProjects(gridInstance!.filter(projects, newTags));
       }
     },
-    [tags, shuffleInstance, defaultTag, setTags, setFilteredProjects]
+    [tags, defaultTag, setTags, gridInstance, setProjects]
   );
 
   return (
