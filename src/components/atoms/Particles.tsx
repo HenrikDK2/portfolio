@@ -1,13 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { FC, memo, useEffect, useRef, useState } from "react";
 import { css } from "goober";
-import {
-  CreateObject,
-  ICanvasObject,
-  MoveAnimate,
-  IParticlesProps,
-  IDraw,
-} from "../../types/particles";
+import { CreateObject, ICanvasObject, MoveAnimate, IParticlesProps, IDraw } from "../../types/particles";
 
 const canvasStyle = css`
   height: 100%;
@@ -65,12 +59,7 @@ const moveAnimate = ({ direction, object, canvas, fps }: MoveAnimate) => {
   }
 };
 
-const createCanvasObject = ({
-  canvas,
-  size,
-  direction,
-  minSize,
-}: CreateObject): ICanvasObject => {
+const createCanvasObject = ({ canvas, size, direction, minSize }: CreateObject): ICanvasObject => {
   const x = Math.random() * canvas.width;
   const y = Math.random() * canvas.height;
 
@@ -79,10 +68,7 @@ const createCanvasObject = ({
     pos: [x, y],
     rgba: [145, 145, 145, 0],
     direction,
-    moveSpeed: [
-      Math.round(Math.random() * 4 + 1),
-      Math.round(Math.random() * 8 + 2),
-    ],
+    moveSpeed: [Math.round(Math.random() * 4 + 1), Math.round(Math.random() * 8 + 2)],
     transitions: {
       opacity: {
         name: Math.random() < 0.5 ? "show" : "hide",
@@ -101,9 +87,7 @@ const createCanvasObject = ({
 
 const getAmounts = (props: IParticlesProps): IParticlesProps["amount"] => {
   if (props.amountBreakpoints) {
-    const entries = Object.entries(props.amountBreakpoints).sort(
-      (a, b) => parseInt(b[0]) - parseInt(a[0])
-    );
+    const entries = Object.entries(props.amountBreakpoints).sort((a, b) => parseInt(b[0]) - parseInt(a[0]));
 
     for (let entry of entries) {
       if (window.matchMedia(`(min-width: ${entry[0]}px)`).matches) {
@@ -153,10 +137,7 @@ export const Particles: FC<IParticlesProps> = memo((props) => {
   useEffect(() => {
     if (canvasRef.current && init && objects.current) {
       const ctx = canvasRef.current.getContext("2d")!;
-      const update = setInterval(
-        () => draw({ ctx, objects: objects.current!, ...props }),
-        1000 / props.fps
-      );
+      const update = setInterval(() => draw({ ctx, objects: objects.current!, ...props }), 1000 / props.fps);
 
       return () => clearInterval(update);
     }
@@ -192,7 +173,7 @@ export const Particles: FC<IParticlesProps> = memo((props) => {
       if (canvasRef.current?.width !== canvasRef.current?.clientWidth) {
         setInit(false);
       }
-    }, 250);
+    }, 50);
   };
 
   useEffect(() => {
@@ -205,11 +186,5 @@ export const Particles: FC<IParticlesProps> = memo((props) => {
     };
   }, []);
 
-  return (
-    <canvas
-      aria-label="Particle Background"
-      ref={canvasRef}
-      className={canvasStyle}
-    />
-  );
+  return <canvas aria-label="Particle Background" ref={canvasRef} className={canvasStyle} />;
 });
