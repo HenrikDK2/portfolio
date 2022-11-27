@@ -73,13 +73,23 @@ export class GridLayout {
     return this.items.filter((el) => el.getAttribute("aria-hidden") === "false");
   }
 
+  hideItem(el: HTMLElement) {
+    el.setAttribute("aria-hidden", "true");
+    el.style.transition = "all .4s ease";
+    el.style.transform = el.style.transform + " scale(0)";
+    el.style.opacity = "0";
+    el.tabIndex = -1;
+  }
+
+  showItem(el: HTMLElement) {
+    el.setAttribute("aria-hidden", "false");
+    el.style.opacity = "1";
+    el.tabIndex = 0;
+  }
+
   filter(projects: Project[], tags: Tags): Project[] {
     if (tags.includes(defaultTag)) {
-      for (const el of this.items) {
-        el.setAttribute("aria-hidden", "false");
-        el.style.opacity = "1";
-      }
-
+      for (const el of this.items) this.showItem(el);
       this.renderLayout();
       return projects;
     }
@@ -90,17 +100,12 @@ export class GridLayout {
 
       for (const tag of tags) {
         if (!elTags?.includes(tag)) {
-          el.setAttribute("aria-hidden", "true");
-          el.style.transition = "all .4s ease";
-          el.style.transform = el.style.transform + " scale(0)";
-          el.style.opacity = "0";
+          this.hideItem(el);
           return false;
         }
       }
 
-      el.setAttribute("aria-hidden", "false");
-      el.style.transition = "all .4s ease";
-      el.style.opacity = "1";
+      this.showItem(el);
       return true;
     });
 
