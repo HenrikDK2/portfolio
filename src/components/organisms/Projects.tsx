@@ -20,7 +20,7 @@ const ProjectsSection = styled("section")`
   }
 
   @media (max-width: 515px) {
-    padding: 100px 0 100px;
+    padding: 100px 0 150px;
   }
 `;
 

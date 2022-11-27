@@ -9,7 +9,7 @@ const Section = styled("section")`
   position: relative;
   padding: 300px 0 400px;
   @media (max-width: 515px) {
-    padding: 0px 0 200px;
+    padding: 100px 0 100px;
   }
 `;
 
