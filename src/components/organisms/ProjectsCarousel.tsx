@@ -145,7 +145,10 @@ const handleOnKeyDown = (
   setExitModal: React.Dispatch<boolean>,
   swiper: ISwiper
 ) => {
-  if (e.code === "Escape") setExitModal(true);
+  if (e.code === "Escape") {
+    document.documentElement.style.overflowY = "scroll";
+    setExitModal(true);
+  }
   if (e.code === "ArrowRight" || e.code === "KeyD") {
     swiper.slideNext();
   }
@@ -169,9 +172,7 @@ export const ProjectsCarousel: FC<IProjectsCarouselProps> = ({ carousel, setCaro
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside, true);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside, true);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside, true);
   }, []);
 
   useEffect(() => {
