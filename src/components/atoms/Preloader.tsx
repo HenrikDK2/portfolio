@@ -1,18 +1,12 @@
 import { styled } from "goober";
-import React from "react";
 
-interface PreloaderProps {
-  children?: React.ReactNode;
-}
-
-const PreloaderElm = styled("div")`
+export const Preloader = styled("div")`
   position: fixed;
   left: 0;
   top: 0;
-  height: 200vh;
-  width: 200vw;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
   z-index: 99999999999999;
   background-color: #fff;
 `;
-
-export const Preloader: React.FC<PreloaderProps> = () => <PreloaderElm />;
