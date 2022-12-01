@@ -2,27 +2,6 @@
 <html lang="da">
   <head>
     <meta charset="utf-8" />
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-        overflow-x: hidden;
-      }
-
-      #preloader {
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transition: opacity 0.5s ease;
-        opacity: 1;
-        position: fixed;
-        user-select: none;
-        background-color: #110a0a;
-        z-index: 100000000000;
-      }
-    </style>
     <link rel="icon" href="%PUBLIC_URL%/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
@@ -48,19 +27,6 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="preloader">
-      <img
-        src="./loader.svg"
-        alt=""
-        rel="preload"
-        style="display: block; width: 30vw; height: 30vh"
-      />
-    </div>
     <div id="root"></div>
-    <script>
-      document
-        .getElementById("preloader")
-        .addEventListener("dragstart", (e) => e.preventDefault());
-    </script>
   </body>
 </html>

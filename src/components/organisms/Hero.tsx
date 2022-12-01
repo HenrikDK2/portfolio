@@ -1,14 +1,13 @@
 import { css, styled } from "goober";
-import React, { FC, memo } from "react";
+import React, { FC } from "react";
 import fullscreenImage from "../../images/fullscreenImage.jpg";
 import fullscreenImageLaptop from "../../images/fullscreenImageLaptop.jpg";
 import fullscreenImageMobile from "../../images/fullscreenImageMobile.jpg";
-import { IInit } from "../../types";
 import { PrimaryButton } from "../atoms/Buttons";
 
 interface IHeroProps {
-  init: IInit;
-  setInit: React.Dispatch<IInit>;
+  init: boolean;
+  setInit: React.Dispatch<boolean>;
 }
 
 const Section = styled("section")`
@@ -84,18 +83,17 @@ const contactBtnHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
   }
 };
 
-export const Hero: FC<IHeroProps> = memo(({ init, setInit }) => {
+export const Hero: FC<IHeroProps> = ({ init, setInit }) => {
   const headingAnimStyle = css`
-    animation: ${init.playAnim === true ? "slideDownFade" : ""} 1s forwards 0.3s;
+    animation: ${init ? "slideDownFade" : ""} 1s forwards 0.3s;
     &::after {
-      animation: ${init.playAnim === true ? "middleLineOut" : ""} 0.3s forwards
-        1.4s;
+      animation: ${init ? "middleLineOut" : ""} 0.3s forwards 1.4s;
     }
   `;
 
   const btnAnimStyle = css`
     opacity: 0;
-    animation: ${init?.playAnim ? "fadeIn" : ""} 2s forwards 1.85s;
+    animation: ${init ? "fadeIn" : ""} 2s forwards 1.85s;
   `;
 
   return (
@@ -111,7 +109,7 @@ export const Hero: FC<IHeroProps> = memo(({ init, setInit }) => {
           <img
             onDragStart={(e) => e.preventDefault()}
             loading="lazy"
-            onLoad={() => setInit({ ...init, preload: true })}
+            onLoad={() => setInit(true)}
             src={fullscreenImageMobile}
             alt="Hero billed for min Webudvikler Portfolio lavede i React"
           />
@@ -122,4 +120,4 @@ export const Hero: FC<IHeroProps> = memo(({ init, setInit }) => {
       </PrimaryButton>
     </Section>
   );
-});
+};
