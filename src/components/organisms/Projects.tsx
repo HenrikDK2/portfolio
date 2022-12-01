@@ -4,7 +4,7 @@ import { LineHeading } from "../atoms/LineHeading";
 import { Project, ICarousel, Tags } from "../../types";
 import { ProjectTags } from "../molecules/ProjectTags";
 import { ProjectsCarousel } from "./ProjectsCarousel";
-import { useInView } from "react-intersection-observer";
+import { useObserver } from "preact-intersection-observer";
 import unfilteredProjects from "../../data/projects.json";
 import { GridLayout } from "../../utils/gridLayout";
 import { ProjectItem } from "../molecules/ProjectItem";
@@ -72,7 +72,7 @@ export const Projects: React.FC = memo(() => {
   const listRef = useRef<HTMLUListElement>(null);
   const [gridInstance, setGridInstance] = useState<GridLayout>();
   const [projects, setProjects] = useState<Project[]>(unfilteredProjects);
-  const [ref, inView] = useInView(intersectOptions);
+  const [ref, inView] = useObserver<HTMLElement>(intersectOptions);
   const [tags, setTags] = useState<Tags>([defaultTag]);
   const [carousel, setCarousel] = useState<ICarousel>({
     show: false,

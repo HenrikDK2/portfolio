@@ -12,11 +12,11 @@
     "mailgun-js": "^0.22.0",
     "netlify-lambda": "^2.0.15",
     "preact": "^10.11.1",
+    "preact-intersection-observer": "^2.2.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.36.1",
     "react-icons": "^4.4.0",
-    "react-intersection-observer": "^9.4.0",
     "swiper": "^8.4.2"
   },
   "scripts": {

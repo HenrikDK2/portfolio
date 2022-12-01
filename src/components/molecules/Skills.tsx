@@ -1,5 +1,5 @@
 import { css, styled } from "goober";
-import { useInView } from "react-intersection-observer";
+import { useObserver } from "preact-intersection-observer";
 import { LineHeading } from "../atoms/LineHeading";
 import { Image } from "./Image";
 import { SkillArray } from "../../types";
@@ -162,12 +162,11 @@ const inViewStyle = css`
 const intersectOptions = {
   triggerOnce: true,
   threshold: window.innerWidth < 500 ? 0.3 : 0.2,
-  rootMargin:
-    window.innerWidth < 500 ? "0px 0px 0px 0px" : "0px 0px -200px 0px",
+  rootMargin: window.innerWidth < 500 ? "0px 0px 0px 0px" : "0px 0px -200px 0px",
 };
 
 export const Skills = () => {
-  const [ref, inView] = useInView(intersectOptions);
+  const [ref, inView] = useObserver(intersectOptions);
 
   return (
     <article className={`${articleStyle} ${inView && inViewStyle}`} ref={ref}>

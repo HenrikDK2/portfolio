@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { css, styled } from "goober";
 import { FaHeart, FaBriefcase, FaBirthdayCake } from "react-icons/fa";
-import { useInView } from "react-intersection-observer";
+import { useObserver } from "preact-intersection-observer";
 
 type StrDate = `${number}-${number}-${number}`;
 
@@ -140,7 +140,7 @@ const intersectOptions = {
 };
 
 export const AboutMe: FC = () => {
-  const [ref, inView] = useInView(intersectOptions);
+  const [ref, inView] = useObserver(intersectOptions);
 
   return (
     <article id="aboutMe" ref={ref} className={`${articleStyle} ${inView && inViewStyle}`}>
