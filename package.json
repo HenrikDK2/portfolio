@@ -7,17 +7,17 @@
   "license": "MIT",
   "dependencies": {
     "capitalize": "^2.0.4",
-    "focus-trap-react": "^10.0.0",
+    "focus-trap-react": "^10.0.1",
     "goober": "^2.1.11",
     "mailgun-js": "^0.22.0",
     "netlify-lambda": "^2.0.15",
-    "preact": "^10.11.1",
+    "preact": "^10.11.3",
     "preact-intersection-observer": "^2.2.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.36.1",
-    "react-icons": "^4.4.0",
-    "swiper": "^8.4.2"
+    "react-hook-form": "^7.40.0",
+    "react-icons": "^4.7.1",
+    "swiper": "^8.4.5"
   },
   "scripts": {
     "start": "react-app-rewired start",
@@ -51,14 +51,14 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
-    "@types/jest": "^29.1.1",
-    "@types/node": "^18.8.2",
-    "@types/react": "^18.0.21",
-    "@types/react-dom": "^18.0.6",
+    "@types/jest": "^29.2.3",
+    "@types/node": "^18.11.10",
+    "@types/react": "^18.0.25",
+    "@types/react-dom": "^18.0.9",
     "@types/react-modal": "^3.13.1",
     "customize-cra": "^1.0.0",
     "react-app-rewired": "^2.2.1",
     "react-scripts": "5.0.1",
-    "typescript": "^4.8.4"
+    "typescript": "^4.9.3"
   }
 }
