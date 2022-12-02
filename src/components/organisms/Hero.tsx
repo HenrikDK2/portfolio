@@ -1,14 +1,9 @@
 import { css, styled } from "goober";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import fullscreenImage from "../../images/fullscreenImage.jpg";
 import fullscreenImageLaptop from "../../images/fullscreenImageLaptop.jpg";
 import fullscreenImageMobile from "../../images/fullscreenImageMobile.jpg";
 import { PrimaryButton } from "../atoms/Buttons";
-
-interface IHeroProps {
-  init: boolean;
-  setInit: React.Dispatch<boolean>;
-}
 
 const Section = styled("section")`
   display: flex;
@@ -25,6 +20,7 @@ const ImageContainer = styled("div")`
   img {
     width: 100%;
     height: 100%;
+    font-size: 0;
     display: block;
     object-fit: cover;
   }
@@ -83,17 +79,19 @@ const contactBtnHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
   }
 };
 
-export const Hero: FC<IHeroProps> = ({ init, setInit }) => {
+export const Hero: FC = () => {
+  const [anim, setAnim] = useState<boolean>(false);
+
   const headingAnimStyle = css`
-    animation: ${init ? "slideDownFade" : ""} 1s forwards 0.3s;
+    animation: ${anim ? "slideDownFade" : ""} 1s forwards 0.3s;
     &::after {
-      animation: ${init ? "middleLineOut" : ""} 0.3s forwards 1.4s;
+      animation: ${anim ? "middleLineOut" : ""} 0.3s forwards 1.4s;
     }
   `;
 
   const btnAnimStyle = css`
     opacity: 0;
-    animation: ${init ? "fadeIn" : ""} 2s forwards 1.85s;
+    animation: ${anim ? "fadeIn" : ""} 2s forwards 1.85s;
   `;
 
   return (
@@ -109,7 +107,7 @@ export const Hero: FC<IHeroProps> = ({ init, setInit }) => {
           <img
             onDragStart={(e) => e.preventDefault()}
             loading="lazy"
-            onLoad={() => setInit(true)}
+            onLoad={() => setAnim(true)}
             src={fullscreenImageMobile}
             alt="Hero billed for min Webudvikler Portfolio lavede i React"
           />

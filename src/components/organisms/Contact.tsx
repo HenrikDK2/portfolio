@@ -1,4 +1,4 @@
-import { FC, memo } from "react";
+import { FC } from "react";
 import { styled } from "goober";
 import { Divider } from "../atoms/Divider";
 import { ContactNotice } from "../molecules/ContactNotice";
@@ -32,7 +32,7 @@ const ContentContainer = styled("div")`
   }
 `;
 
-export const Contact: FC = memo(() => (
+export const Contact: FC = () => (
   <Section>
     <Particles
       amount={30}
@@ -49,4 +49,4 @@ export const Contact: FC = memo(() => (
       <ContactNotice />
     </ContentContainer>
   </Section>
-));
+);

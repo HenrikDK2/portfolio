@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { css, styled } from "goober";
 import { LineHeading } from "../atoms/LineHeading";
 import { Project, ICarousel, Tags } from "../../types";
@@ -68,7 +68,7 @@ const intersectOptions = {
 };
 
 export const defaultTag = "Alle";
-export const Projects: React.FC = memo(() => {
+export const Projects: React.FC = () => {
   const listRef = useRef<HTMLUListElement>(null);
   const [gridInstance, setGridInstance] = useState<GridLayout>();
   const [projects, setProjects] = useState<Project[]>(unfilteredProjects);
@@ -111,4 +111,4 @@ export const Projects: React.FC = memo(() => {
       <ProjectsCarousel carousel={carousel} setCarousel={setCarousel} projects={projects} />
     </ProjectsSection>
   );
-});
+};

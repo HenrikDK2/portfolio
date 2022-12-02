@@ -1,5 +1,5 @@
 import { styled } from "goober";
-import { FC, memo } from "react";
+import { FC } from "react";
 import { AboutMe } from "../molecules/AboutMe";
 import { Skills } from "../molecules/Skills";
 import { Divider } from "../atoms/Divider";
@@ -31,7 +31,7 @@ const Section = styled("section")`
   }
 `;
 
-export const About: FC = memo(() => (
+export const About: FC = () => (
   <Section>
     <AboutMe />
     <Particles
@@ -46,4 +46,4 @@ export const About: FC = memo(() => (
     <Skills />
     <Divider />
   </Section>
-));
+);
