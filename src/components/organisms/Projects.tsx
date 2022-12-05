@@ -38,7 +38,7 @@ const gridArticle = css`
   margin: 0 auto;
 
   & > h2 {
-    margin: 46px 0;
+    margin: 0 0 46px;
     width: max-content;
     align-self: center;
   }
