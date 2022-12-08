@@ -20,7 +20,7 @@ const ProjectsSection = styled("section")`
   }
 
   @media (max-width: 515px) {
-    padding: 100px 0 150px;
+    padding: 100px 0;
   }
 `;
 
@@ -29,24 +29,24 @@ const Heading = styled(LineHeading)`
 `;
 
 const gridArticle = css`
-  display: flex;
-  flex-direction: column;
-  min-height: 838px;
-  max-width: 1070px;
   opacity: 0;
   padding: 0 1rem;
   margin: 0 auto;
 
   & > h2 {
-    margin: 0 0 46px;
+    margin: 0 auto 46px;
     width: max-content;
-    align-self: center;
   }
 
   @media (max-width: 650px) {
     & > h2 {
       font-size: 10.5vw;
     }
+  }
+
+  @media (min-width: 500px) {
+    min-height: 838px;
+    max-width: 1070px;
   }
 `;
 
