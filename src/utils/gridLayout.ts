@@ -41,32 +41,23 @@ export class GridLayout {
 
   renderLayout(disableTransition?: boolean) {
     this.calcColumns();
-
     const { colHeight, colWidth, cols, gap } = this;
     const filteredItems = this.getFilteredItems();
-    let rowMultiplier = 0;
-    let gapMultiplier = 0;
+    const position = (index: number) => {
+      const x = colWidth * (index % cols) + gap * (index % cols);
+      const y = colHeight * Math.floor(index / cols) + gap * Math.floor(index / cols);
+      return { x, y };
+    };
 
-    for (let i = 0; i < filteredItems.length; i++) {
-      const el = filteredItems[i];
-      const y = colHeight * rowMultiplier + gap * rowMultiplier;
-      let x = colWidth * (i % cols) + gap * gapMultiplier;
-
-      gapMultiplier += 1;
-
-      if (i % cols === cols - 1) {
-        rowMultiplier += 1;
-        gapMultiplier = 0;
-      }
-
+    filteredItems.forEach((el, index) => {
+      const { x, y } = position(index);
       if (disableTransition) {
         el.style.transition = "none";
       } else {
         el.style.transition = "all .4s ease";
       }
-
       el.style.transform = `translate(${x}px, ${y}px)`;
-    }
+    });
   }
 
   getFilteredItems(): HTMLElement[] {
@@ -126,15 +117,9 @@ export class GridLayout {
   calcHeight() {
     const { colHeight, cols, gap } = this;
     const items = this.getFilteredItems();
-    let rowMultiplier = 0;
-    let gapSize = Math.floor(items.length / cols) * gap;
-
-    for (let i = 0; i < items.length; i++) {
-      if (i % cols === cols - 1) rowMultiplier += 1;
-    }
-
-    if (cols > 1) rowMultiplier += 1;
-    return colHeight * rowMultiplier + gapSize;
+    let rows = Math.ceil(items.length / cols);
+    let gapSize = (rows - 1) * gap;
+    return colHeight * rows + gapSize;
   }
 
   calcColumns() {
